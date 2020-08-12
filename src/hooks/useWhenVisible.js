@@ -1,24 +1,24 @@
 import { useEffect } from 'react'
 
-export const useWhenVisible = (target, callback, root = document.body) => {
+export const useWhenVisible = (
+    target,
+    callback,
+    options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+    }
+) => {
     useEffect(() => {
-        if (!target || !root) {
-            return
-        }
+        const current = target.current
+        if (!current) return
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    callback()
-                }
-            },
-            { root }
-        )
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) callback()
+        }, options)
 
-        observer.observe(target)
+        observer.observe(current)
 
-        return () => {
-            observer.unobserve(target)
-        }
-    }, [target, callback, root])
+        return () => observer.unobserve(current)
+    }, [target, callback, options])
 }

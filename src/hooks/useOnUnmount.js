@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export const useOnUnmount = (handler) => {
+export const useOnUnmount = handler => {
     useEffect(
         () => () => {
             handler()

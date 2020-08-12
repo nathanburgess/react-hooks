@@ -13,7 +13,7 @@ export const useFetch = (url, options) => {
                 setError(e)
             }
         }
-        doFetch()
+        doFetch().then()
     }, [options, url])
 
     return { response, error }
